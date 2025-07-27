@@ -25,8 +25,8 @@ class LessonController extends Controller
      */
     public function store(StoreLessonRequest $request)
     {
-        $category = Category::create($request->validated());
-        return new CategoryResource($category);
+        $lesson = Lesson::create($request->validated());
+        return new LessonResource($lesson->load('category'));
     }
 
     /**
@@ -34,7 +34,7 @@ class LessonController extends Controller
      */
     public function show(Lesson $lesson ,$id)
     {
-        return new CategoryResource(Category::findOrFail($id));
+        return new LessonResource(Lesson::with('category')->findOrFail($id)); 
     }
 
 
@@ -43,9 +43,9 @@ class LessonController extends Controller
      */
     public function update(UpdateLessonRequest $request, Lesson $lesson ,$id)
     {
-        $category = Category::findOrFail($id);
-        $category->update($request->validated());
-        return new CategoryResource($category);
+        $lesson = Lesson::findOrFail($id);
+        $lesson->update($request->validated());
+        return new LessonResource($lesson->load('category'));
     }
 
     /**
@@ -53,8 +53,8 @@ class LessonController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::findOrFail($id);
-        $category->delete();
-        return response()->json(['message' => 'Lesson Deleted successfully']);
+        $lesson = Lesson::findOrFail($id);
+        $lesson->delete();
+        return response()->json(['message' => 'lesson Deleted successfully']);
     }
 }
