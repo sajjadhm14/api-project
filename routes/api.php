@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
@@ -31,4 +32,14 @@ Route::prefix('v1')->middleware('throttle:60,1')->group(function () {
     Route::get('/tasks/{id}', [TaskController::class, 'show']);
     Route::put('/tasks/{id}', [TaskController::class, 'update'])->middleware('auth:sanctum');
     Route::delete('/tasks/{id}', [TaskController::class, 'destroy'])->middleware('auth:sanctum');
+});
+
+
+
+Route::prefix('category')->group(function(){
+    Route::get('',[CategoryController::class , 'index']);
+    Route::get('{id}',[CategoryController::class, 'show']);
+    Route::post('',[CategoryController::class, 'store']);
+    Route::put('{id}',[CategoryController::class, 'update']);
+    Route::delete('{id}',[CategoryController::class, 'destroy']);
 });
