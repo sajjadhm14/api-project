@@ -16,4 +16,12 @@ class StoreCategoryResource extends JsonResource
     {
         return parent::toArray($request);
     }
+
+    public function rules()
+    {
+        return [
+            'title' => 'required|string',
+            'description' => 'required|string',
+        ];
+    }
 }
