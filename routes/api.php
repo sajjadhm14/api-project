@@ -19,21 +19,6 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::prefix('v2')->group(function () {
-    Route::get('/tasks', [TaskController::class, 'indexV2']);
-    
-});
-
-
-Route::prefix('v1')->middleware('throttle:60,1')->group(function () {
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
-    Route::get('/tasks', [TaskController::class, 'index']);
-    Route::post('/tasks', [TaskController::class, 'store'])->middleware('auth:sanctum');
-    Route::get('/tasks/{id}', [TaskController::class, 'show']);
-    Route::put('/tasks/{id}', [TaskController::class, 'update'])->middleware('auth:sanctum');
-    Route::delete('/tasks/{id}', [TaskController::class, 'destroy'])->middleware('auth:sanctum');
-});
 
 
 
