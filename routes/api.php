@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LessonController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Models\Ticket;
@@ -42,4 +43,12 @@ Route::prefix('category')->group(function(){
     Route::post('',[CategoryController::class, 'store']);
     Route::put('{id}',[CategoryController::class, 'update']);
     Route::delete('{id}',[CategoryController::class, 'destroy']);
+});
+
+Route::prefix('lesson')->group(function(){
+    Route::get('',[LessonController::class , 'index']);
+    Route::get('{id}',[LessonController::class, 'show']);
+    Route::post('',[LessonController::class, 'store']);
+    Route::put('{id}',[LessonController::class, 'update']);
+    Route::delete('{id}',[LessonController::class, 'destroy']);
 });
