@@ -11,7 +11,7 @@ class StoreSelect_optionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
