@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Text_Answer;
 use App\Http\Requests\StoreText_AnswerRequest;
+use App\Http\Requests\StoreTextAnswerRequest;
 use App\Http\Requests\UpdateText_AnswerRequest;
+use App\Http\Requests\UpdateTextAnswerRequest;
+use App\Http\Resources\TextAnswerResource;
+use App\Models\TextAnswer;
 
 class TextAnswerController extends Controller
 {
@@ -13,29 +17,23 @@ class TextAnswerController extends Controller
      */
     public function index()
     {
-        //
+        return TextAnswerResource::collection(TextAnswer::all());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreText_AnswerRequest $request)
+    public function store(StoreTextAnswerRequest $request)
     {
-        //
+        $textAnswer = TextAnswer::create($request->validated());
+        return new TextAnswerResource($textAnswer);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Text_Answer $text_Answer)
+    public function show(TextAnswer $text_Answer)
     {
         //
     }
@@ -43,7 +41,7 @@ class TextAnswerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Text_Answer $text_Answer)
+    public function edit(TextAnswer $text_Answer)
     {
         //
     }
@@ -51,7 +49,7 @@ class TextAnswerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateText_AnswerRequest $request, Text_Answer $text_Answer)
+    public function update(UpdateTextAnswerRequest $request, TextAnswer $text_Answer)
     {
         //
     }
@@ -59,7 +57,7 @@ class TextAnswerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Text_Answer $text_Answer)
+    public function destroy(TextAnswer $text_Answer)
     {
         //
     }
