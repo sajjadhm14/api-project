@@ -22,7 +22,8 @@ class StoreText_AnswerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'expected_answer' => 'required|string',
+            'question_id' => 'required|exists:questions,id',
         ];
     }
 }

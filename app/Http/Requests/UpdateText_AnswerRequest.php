@@ -22,7 +22,7 @@ class UpdateText_AnswerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'expected_answer' => 'required|string',
         ];
     }
 }
