@@ -32,18 +32,17 @@ class LessonController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Lesson $lesson ,$id)
+    public function show(Lesson $lesson )
     {
-        return new LessonResource(Lesson::with('category')->findOrFail($id)); 
+        return new LessonResource($lesson->load('category')); 
     }
 
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateLessonRequest $request, Lesson $lesson ,$id)
+    public function update(UpdateLessonRequest $request, Lesson $lesson)
     {
-        $lesson = Lesson::findOrFail($id);
         $lesson->update($request->validated());
         return new LessonResource($lesson->load('category'));
     }
@@ -51,9 +50,9 @@ class LessonController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Lesson $lesson)
     {
-        $lesson = Lesson::findOrFail($id);
+        
         $lesson->delete();
         return response()->json(['message' => 'lesson Deleted successfully']);
     }

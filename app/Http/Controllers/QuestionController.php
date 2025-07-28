@@ -29,7 +29,7 @@ class QuestionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Question $question ,$id)
+    public function show(Question $question )
     {
         return new QuestionResource($question);
     }

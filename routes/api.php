@@ -25,23 +25,23 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('category')->group(function(){
     Route::get('',[CategoryController::class , 'index']);
-    Route::get('{id}',[CategoryController::class, 'show']);
+    Route::get('{category}',[CategoryController::class, 'show']);
     Route::post('',[CategoryController::class, 'store']);
-    Route::put('{id}',[CategoryController::class, 'update']);
-    Route::delete('{id}',[CategoryController::class, 'destroy']);
+    Route::put('{category}',[CategoryController::class, 'update']);
+    Route::delete('{category}',[CategoryController::class, 'destroy']);
 });
 
 Route::prefix('lesson')->group(function(){
     Route::get('',[LessonController::class , 'index']);
-    Route::get('{id}',[LessonController::class, 'show']);
+    Route::get('{lesson}',[LessonController::class, 'show']);
     Route::post('',[LessonController::class, 'store']);
-    Route::put('{id}',[LessonController::class, 'update']);
-    Route::delete('{id}',[LessonController::class, 'destroy']);
+    Route::put('{lesson}',[LessonController::class, 'update']);
+    Route::delete('{lesson}',[LessonController::class, 'destroy']);
 });
 Route::prefix('question')->group(function(){
     Route::get('',[QuestionController::class , 'index']);
-    Route::get('{id}',[QuestionController::class, 'show']);
+    Route::get('{question}',[QuestionController::class, 'show']);
     Route::post('',[QuestionController::class, 'store']);
-    Route::put('{id}',[QuestionController::class, 'update']);
-    Route::delete('{id}',[QuestionController::class, 'destroy']);
+    Route::put('{question}',[QuestionController::class, 'update']);
+    Route::delete('{question}',[QuestionController::class, 'destroy']);
 });

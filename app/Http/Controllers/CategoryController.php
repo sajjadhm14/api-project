@@ -29,18 +29,18 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Category $category ,$id)
+    public function show(Category $category)
     {
-        return new CategoryResource(Category::findOrFail($id));
+        return new CategoryResource(Category::findOrFail($category));
     }
 
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategoryRequest $request, Category $category ,$id)
+    public function update(UpdateCategoryRequest $request, Category $category )
     {
-        $category = Category::findOrFail($id);
+        
         $category->update($request->validated());
         return new CategoryResource($category);
     }
@@ -48,9 +48,9 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        $category = Category::findOrFail($id);
+       
         $category->delete();
         return response()->json(['message' => 'Deleted successfully']);
     }
