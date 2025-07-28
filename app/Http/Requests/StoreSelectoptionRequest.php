@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateSelect_optionRequest extends FormRequest
+class StoreSelectoptionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,9 @@ class UpdateSelect_optionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'text' => 'required|string|max:255',
+            'is_correct' => 'required|boolean',
+            'question_id' => 'required|exists:questions,id',
         ];
     }
 }
