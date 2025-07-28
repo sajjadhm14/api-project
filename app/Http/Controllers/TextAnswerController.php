@@ -33,32 +33,26 @@ class TextAnswerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(TextAnswer $text_Answer)
+    public function show(TextAnswer $textAnswer)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(TextAnswer $text_Answer)
-    {
-        //
+        return new TextAnswerResource($textAnswer);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTextAnswerRequest $request, TextAnswer $text_Answer)
+    public function update(UpdateTextAnswerRequest $request, TextAnswer $textAnswer)
     {
-        //
+        $textAnswer ->update($request->validated());
+        return new TextAnswerResource($textAnswer);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TextAnswer $text_Answer)
+    public function destroy(TextAnswer $textAnswer)
     {
-        //
+        $textAnswer->delete();
+        return response()->json(['message'=> 'the textanswer deleted successfully']);
     }
 }
