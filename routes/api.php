@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TextAnswerController;
 use App\Http\Controllers\UserController;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -44,4 +45,11 @@ Route::prefix('question')->group(function(){
     Route::post('',[QuestionController::class, 'store']);
     Route::put('{question}',[QuestionController::class, 'update']);
     Route::delete('{question}',[QuestionController::class, 'destroy']);
+});
+Route::prefix('textanswer')->group(function(){
+    Route::get('',[TextAnswerController::class , 'index']);
+    Route::get('{textanswer}',[TextAnswerController::class, 'show']);
+    Route::post('',[TextAnswerController::class, 'store']);
+    Route::put('{textanswer}',[TextAnswerController::class, 'update']);
+    Route::delete('{textanswer}',[TextAnswerController::class, 'destroy']);
 });
