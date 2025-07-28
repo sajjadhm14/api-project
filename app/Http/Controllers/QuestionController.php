@@ -22,38 +22,34 @@ class QuestionController extends Controller
      */
     public function store(StoreQuestionRequest $request)
     {
-        //
+        $question = Question::create($request->validated());
+        return new QuestionResource($question);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Question $question)
+    public function show(Question $question ,$id)
     {
-        //
+        return new QuestionResource($question);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Question $question)
-    {
-        //
-    }
-
+  
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateQuestionRequest $request, Question $question)
+    public function update(UpdateQuestionRequest $request, Question $question,$id)
     {
-        //
+        $question->update($request->validated());
+        return new QuestionResource($question);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Question $question)
+    public function destroy(Question $question,$id)
     {
-        //
+        $question->delete();
+        return response()->json(['message'=>'question is deleted']);
     }
 }
