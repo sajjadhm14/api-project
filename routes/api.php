@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\SelectOptionController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TextAnswerController;
 use App\Http\Controllers\UserController;
@@ -52,4 +53,11 @@ Route::prefix('textanswer')->group(function(){
     Route::post('',[TextAnswerController::class, 'store']);
     Route::put('{textanswer}',[TextAnswerController::class, 'update']);
     Route::delete('{textanswer}',[TextAnswerController::class, 'destroy']);
+});
+Route::prefix('selectoption')->group(function(){
+    Route::get('',[SelectOptionController::class , 'index']);
+    Route::get('{selectoption}',[SelectOptionController::class, 'show']);
+    Route::post('',[SelectOptionController::class, 'store']);
+    Route::put('{selectoption}',[SelectOptionController::class, 'update']);
+    Route::delete('{selectoption}',[SelectOptionController::class, 'destroy']);
 });
