@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LessonController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Models\Ticket;
@@ -36,4 +37,11 @@ Route::prefix('lesson')->group(function(){
     Route::post('',[LessonController::class, 'store']);
     Route::put('{id}',[LessonController::class, 'update']);
     Route::delete('{id}',[LessonController::class, 'destroy']);
+});
+Route::prefix('question')->group(function(){
+    Route::get('',[QuestionController::class , 'index']);
+    Route::get('{id}',[QuestionController::class, 'show']);
+    Route::post('',[QuestionController::class, 'store']);
+    Route::put('{id}',[QuestionController::class, 'update']);
+    Route::delete('{id}',[QuestionController::class, 'destroy']);
 });
