@@ -65,3 +65,7 @@ Route::prefix('selectoption')->group(function(){
 });
 Route::apiResource('useranswers',UserAnswerController::class);
 Route::apiResource('userlessons',UserLessonsController::class);
+
+
+Route::post('/login', [AuthController::class, 'login']);
+Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
