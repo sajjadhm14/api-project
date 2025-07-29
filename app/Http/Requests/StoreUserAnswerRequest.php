@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateUser_AnswerRequest extends FormRequest
+class StoreUserAnswerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,10 @@ class UpdateUser_AnswerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id'     => 'required|exists:users|id',
+            'question_id' => 'required|exists:questions|id',
+            'answer'      => 'nullable|string',
+            'points'      => 'nullable|integer|min:0',
         ];
     }
 }
