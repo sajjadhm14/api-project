@@ -9,6 +9,12 @@ class Lesson extends Model
 {
     /** @use HasFactory<\Database\Factories\LessonFactory> */
     use HasFactory;
+    protected $fillable = [
+        'category_id',
+        'title',
+        'description',
+        
+    ];
 
     public function category()
     {

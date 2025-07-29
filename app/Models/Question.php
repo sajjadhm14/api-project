@@ -9,6 +9,12 @@ class Question extends Model
 {
     /** @use HasFactory<\Database\Factories\QuestionFactory> */
     use HasFactory;
+    protected $fillable = [
+        'lesson_id',
+        'text_id',
+        'type',
+        'difficulty',
+    ];
 
     public function lesson()
     {

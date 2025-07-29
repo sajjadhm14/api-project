@@ -9,7 +9,11 @@ class TextAnswer extends Model
 {
     /** @use HasFactory<\Database\Factories\TextAnswerFactory> */
     use HasFactory;
-
+    protected $fillable = [
+        'question_id',
+        'expected_answer',
+        
+    ];
 
     public function question()
     {

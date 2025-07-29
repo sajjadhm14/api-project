@@ -9,6 +9,15 @@ class UserAnswer extends Model
 {
     /** @use HasFactory<\Database\Factories\UserAnswerFactory> */
     use HasFactory;
+    protected $fillable = [
+         'user_id',
+         'question_id',
+         'answer_text',
+         'selected_option_id',
+         'points',
+    ];
+
+    
       public function user()
     {
         return $this->belongsTo(User::class);

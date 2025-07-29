@@ -9,6 +9,13 @@ class SelectOption extends Model
 {
     /** @use HasFactory<\Database\Factories\SelectOptionFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'question_id',
+        'text',
+        'is_correct',
+        
+    ];
     
       public function question()
     {
