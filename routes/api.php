@@ -9,6 +9,7 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SelectOptionController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TextAnswerController;
+use App\Http\Controllers\UserAnswerController;
 use App\Http\Controllers\UserController;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -61,3 +62,4 @@ Route::prefix('selectoption')->group(function(){
     Route::put('{selectoption}',[SelectOptionController::class, 'update']);
     Route::delete('{selectoption}',[SelectOptionController::class, 'destroy']);
 });
+Route::apiResource('useranswers',[UserAnswerController::class]);

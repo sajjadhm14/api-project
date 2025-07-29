@@ -9,7 +9,7 @@ class Category extends Model
 {
     /** @use HasFactory<\Database\Factories\CategoryFactory> */
     use HasFactory;
-
+    
     public function lessons()
     {
         return $this->hasMany(Lesson::class);
