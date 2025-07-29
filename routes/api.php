@@ -62,4 +62,4 @@ Route::prefix('selectoption')->group(function(){
     Route::put('{selectoption}',[SelectOptionController::class, 'update']);
     Route::delete('{selectoption}',[SelectOptionController::class, 'destroy']);
 });
-Route::apiResource('useranswers',[UserAnswerController::class]);
+Route::apiResource('useranswers',UserAnswerController::class);
