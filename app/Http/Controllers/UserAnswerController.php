@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\User_Answer;
 use App\Http\Requests\StoreUser_AnswerRequest;
+use App\Http\Requests\StoreUserAnswerRequest;
 use App\Http\Requests\UpdateUser_AnswerRequest;
+use App\Http\Requests\UpdateUserAnswerRequest;
+use App\Http\Resources\UserAnswerResource;
+use App\Models\UserAnswer;
 
 class UserAnswerController extends Controller
 {
@@ -13,54 +17,46 @@ class UserAnswerController extends Controller
      */
     public function index()
     {
-        //
+        return UserAnswerResource::collection(UserAnswer::all());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUser_AnswerRequest $request)
+    public function store(StoreUserAnswerRequest $request)
     {
-        //
+        $userAnswer = UserAnswer::create($request->validated());
+        return new UserAnswerResource($userAnswer);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(User_Answer $user_Answer)
+    public function show(UserAnswer $userAnswer)
     {
-        //
+        return new UserAnswerResource($userAnswer);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(User_Answer $user_Answer)
-    {
-        //
-    }
+
+    
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUser_AnswerRequest $request, User_Answer $user_Answer)
+    public function update(UpdateUserAnswerRequest $request, UserAnswer $userAnswer)
     {
-        //
+        $userAnswer->update($request->validated());
+        return new UserAnswerResource($userAnswer);   
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User_Answer $user_Answer)
+    public function destroy(UserAnswer $userAnswer)
     {
-        //
+        $userAnswer->delete();
+        return response()->json(['message' => 'User answer deleted successfully']);
     }
 }
