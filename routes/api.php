@@ -11,6 +11,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TextAnswerController;
 use App\Http\Controllers\UserAnswerController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserLessonsController;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -63,3 +64,4 @@ Route::prefix('selectoption')->group(function(){
     Route::delete('{selectoption}',[SelectOptionController::class, 'destroy']);
 });
 Route::apiResource('useranswers',UserAnswerController::class);
+Route::apiResource('userlessons',UserLessonsController::class);
