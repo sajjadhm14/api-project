@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateUser_LessonsRequest;
 use App\Http\Requests\UpdateUserLessonsRequest;
 use App\Http\Resources\UserLessonResource;
 use App\Models\UserLessons;
+use GuzzleHttp\Psr7\Request;
 
 class UserLessonsController extends Controller
 {
@@ -18,6 +19,24 @@ class UserLessonsController extends Controller
     public function index()
     {
         return UserLessonResource::collection(UserLessons::all());
+    }
+    public function startlesson(Request $request)
+    {
+        $user = $request->user();
+        $lesson_id = $request->lesson_id;
+        $userLesson = UserLessons::firstOrCreate([
+            'user_id' => $user->id,
+            'lesson_id' => $lesson_id,
+         ], [
+            'progress' => 1,  // مقدار پیشرفت رو 1 قرار می‌دهیم که یعنی درس شروع شده
+         ]);
+
+        // برگشت دادن وضعیت به کاربر
+        return response()->json([
+            'message' => 'درس با موفقیت شروع شد.',
+            'progress' => $userLesson->progress, // پیشرفت 1 که یعنی درس شروع شده
+        ]);
+    
     }
 
 
