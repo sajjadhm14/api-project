@@ -37,6 +37,7 @@ Route::middleware('auth:sanctum')->prefix('category')->group(function(){
 
 Route::middleware('auth:sanctum')->prefix('lesson')->group(function(){
     Route::get('',[LessonController::class , 'index']);
+    Route::get('start',[LessonController::class , 'startlessonwithquestion']);
     Route::get('{lesson}',[LessonController::class, 'show']);
     Route::post('',[LessonController::class, 'store']);
     Route::put('{lesson}',[LessonController::class, 'update']);
@@ -69,3 +70,5 @@ Route::middleware('auth:sanctum')->apiResource('userlessons',UserLessonsControll
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
+
+
