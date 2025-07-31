@@ -24,7 +24,7 @@ class UserLessonsController extends Controller
     {
         
         $user = $request->user();
-        $lesson_id = $request->lesson_id;
+        $lesson_id = $request->validated()['lesson_id'];
         $userLesson = UserLessons::firstOrCreate([
             'user_id' => $user->id,
             'lesson_id' => $lesson_id,
