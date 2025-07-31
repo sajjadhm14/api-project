@@ -27,8 +27,29 @@ class UserAnswerController extends Controller
      */
     public function store(StoreUserAnswerRequest $request)
     {
-        $userAnswer = UserAnswer::create($request->validated());
-        return new UserAnswerResource($userAnswer);
+      $user = $request->user();
+      $data = $request->validated();
+
+      $exists = UserAnswer::where('user_id',$user->id)
+        ->where('question_id',$data['question_id'])
+        ->exists();
+    if ($exists){
+        return response()->json(['message' => 'you have already answered questino']);
+    
+    }
+    $answer =UserAnswer::create([
+        'user_id' =>$user->id,
+        'question_id'=> $data['question_id'],
+        'answer_text' => $data['answer_text'] ??null,
+        'select_option_id' =>$data['select_option_id'] ?? null,
+        'points'=> 0,
+    ]);
+
+    return response()->json([
+        'message' => 'your answer is done',
+        'answer'=>$answer,
+    ]);
+
     }
 
     /**
