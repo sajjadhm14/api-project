@@ -23,10 +23,9 @@ class StoreUserAnswerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id'     => 'required|exists:users|id',
-            'question_id' => 'required|exists:questions|id',
-            'answer'      => 'nullable|string',
-            'points'      => 'nullable|integer|min:0',
+            'question_id' => ['required', 'integer', 'exists:questions,id'],
+            'text_answer' => ['nullable', 'string', 'required_without:select_option_id'],
+            'select_option_id' => ['nullable', 'integer', 'exists:select_options,id', 'required_without:text_answer'],
         ];
     }
 }
