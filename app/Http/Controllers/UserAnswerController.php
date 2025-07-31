@@ -8,7 +8,11 @@ use App\Http\Requests\StoreUserAnswerRequest;
 use App\Http\Requests\UpdateUser_AnswerRequest;
 use App\Http\Requests\UpdateUserAnswerRequest;
 use App\Http\Resources\UserAnswerResource;
+use App\Models\Question;
+use App\Models\SelectOption;
+use App\Models\TextAnswer;
 use App\Models\UserAnswer;
+use App\Models\UserLessons;
 
 class UserAnswerController extends Controller
 {
@@ -37,16 +41,31 @@ class UserAnswerController extends Controller
         return response()->json(['message' => 'you have already answered questino']);
     
     }
+    $iscorrect = false;
+
+    // if its selectoption
+    if(!empty($data['select_option_id'])){
+        $option = SelectOption::find($data['select_option_id']);
+        $iscorrect = $option && $option->is_correct;
+    }
+
+    // if its textanswer
+    if (!empty($data['answer_text'])){
+        $correctanswer = TextAnswer::where('question_id', $data['question_id'])->value('correct_answer');
+        $iscorrect = strtolower(trim($correctanswer)) === strtolower(trim($data['answer_text']));
+    }
     $answer =UserAnswer::create([
         'user_id' =>$user->id,
         'question_id'=> $data['question_id'],
         'answer_text' => $data['answer_text'] ??null,
         'select_option_id' =>$data['select_option_id'] ?? null,
-        'points'=> 0,
-    ]);
+        'points'=> $iscorrect ? 1:0,
+     ]);
+      $question = Question::find($data['question_id']);
+      $this->updateLessonProgress($user->id, $question->lesson_id);
 
     return response()->json([
-        'message' => 'your answer is done',
+        'message' => $iscorrect? "answer is wrong" :'answer is correct',
         'answer'=>$answer,
     ]);
 
@@ -61,6 +80,28 @@ class UserAnswerController extends Controller
     }
 
 
+    public function updatelessonprogress($userid, $lessonid)
+    {
+      $totalQuestions = Question::where('lesson_id', $lessonid)->count();
+
+     if ($totalQuestions === 0) {
+        return; 
+     }
+      $answeredQuestions = UserAnswer::where('user_id', $userid)
+        ->whereIn('question_id', function ($query) use ($lessonid) {
+            $query->select('id')
+                  ->from('questions')
+                  ->where('lesson_id', $lessonid);
+        })->count();
+      $progress = intval(($answeredQuestions / $totalQuestions) * 100);
+
+     // به‌روزرسانی یا ساخت user_lessons
+      UserLessons::updateOrCreate(
+        ['user_id' => $userid, 'lesson_id' => $lessonid],
+        ['progress' => $progress]
+      );
+
+    }
     
 
     /**
