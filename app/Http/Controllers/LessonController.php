@@ -7,7 +7,10 @@ use App\Http\Requests\StoreLessonRequest;
 use App\Http\Requests\UpdateLessonRequest;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\LessonResource;
+use App\Http\Resources\QuestionResource;
 use App\Models\Category;
+use App\Models\Question;
+use App\Models\UserLessons;
 
 class LessonController extends Controller
 {
@@ -17,6 +20,25 @@ class LessonController extends Controller
     public function index()
     {
         return LessonResource::collection(Lesson::all());
+    }
+    public function startlessonwithquestion(StoreLessonRequest $request)
+    {
+        $user = $request -> user();
+        $lesson_id = $request->validated()['lesson_id'];
+        $userlesson = UserLessons::firstorcreate([
+            'user_id' => $user->id,
+            'lesson_id' => $lesson_id,
+        ],[
+            'progress' => 1,
+        ]);
+        $questions = Question::with('selectoptions')
+            ->where('lesson_id', $lesson_id)
+            ->get();
+        return response()->json([
+            'message' => 'سلام عزیز درست شروع شد :)',
+            'progress' => $userlesson->progress,
+            'question' => QuestionResource::collection($questions),
+        ]);
     }
 
   
