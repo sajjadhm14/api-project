@@ -31,7 +31,7 @@ class LessonController extends Controller
         ],[
             'progress' => 1,
         ]);
-        $questions = Question::with('selectoptions')
+        $questions = Question::with('options')
             ->where('lesson_id', $lesson_id)
             ->get();
         return response()->json([

@@ -37,7 +37,7 @@ Route::middleware('auth:sanctum')->prefix('category')->group(function(){
 
 Route::middleware('auth:sanctum')->prefix('lesson')->group(function(){
     Route::get('',[LessonController::class , 'index']);
-    Route::get('start',[LessonController::class , 'startlessonwithquestion']);
+    Route::post('start',[LessonController::class , 'startlessonwithquestion']);
     Route::get('{lesson}',[LessonController::class, 'show']);
     Route::post('',[LessonController::class, 'store']);
     Route::put('{lesson}',[LessonController::class, 'update']);

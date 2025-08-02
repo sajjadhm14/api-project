@@ -11,7 +11,7 @@ class Question extends Model
     use HasFactory;
     protected $fillable = [
         'lesson_id',
-        'text_id',
+        'text',
         'type',
         'difficulty',
     ];
@@ -36,7 +36,6 @@ class Question extends Model
     {
         return $this->hasMany(UserAnswer::class);
     }
-
 
 
 }

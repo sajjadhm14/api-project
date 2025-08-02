@@ -38,7 +38,7 @@ class QuestionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateQuestionRequest $request, Question $question,$id)
+    public function update(UpdateQuestionRequest $request, Question $question,)
     {
         $question->update($request->validated());
         return new QuestionResource($question);
@@ -47,7 +47,7 @@ class QuestionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Question $question,$id)
+    public function destroy(Question $question,)
     {
         $question->delete();
         return response()->json(['message'=>'question is deleted']);

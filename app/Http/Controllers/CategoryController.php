@@ -31,7 +31,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return new CategoryResource(Category::findOrFail($category));
+        return new CategoryResource($category);
     }
 
 
