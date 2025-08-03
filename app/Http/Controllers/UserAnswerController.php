@@ -39,37 +39,23 @@ class UserAnswerController extends Controller
         ->where('question_id',$data['Question_id'])
         ->exist();
 
-        
+
         if ($exists){
             return response()->json(['message'=> "you have already answered question"]);
         }
-        $iscorrect =false;
+       
+        $builder = new UserAnswerBuilder();
+        $answer = $builder ->setUser($user)->setData($data)->build();
 
-        if (!empty($data['select_question_id'])){
-            $option = SelectOption::find($data['select_option_id']);
-            $iscorrect = $option && $option->is_correct;
-        }
-        
-        if (!empty($data['answer_text'])){
-            $correctanswer = TextAnswer::where('question_id', $data['question_id'])->value('expected_answer');
-            $iscorrect = strtolower(trim($correctanswer)) === strtolower($data['answer_text']);
-        }
+        $question = Question::find ($data['question_id']);
+        $this->updatelessonprogress($user->id,$question->lesson_id);
 
-        $answer = UserAnswer::create([
-            'user_id' =>$user->id,
-            'question_id'=> $data['question_id'],
-            'answer_text' => $data['answer_text'] ?? null,
-            'select_option_id' =>$data['select_option_id'] ?? null,
-            'points'=> $iscorrect ? 1 : 0,
-        ]);
-
-        $question = Question::find($data['question_id']);
-        $this->updateLessonProgress($user->id, $question->lesson_id);
-
+    
         return response()->json([
-              'message' => $iscorrect ? "answer is correct" : 'answer is wrong',
-              'answer'=>$answer,
+            'message' => $builder->isCorrect() ? "answer is correct" : 'answer is wrong',
+            'answer' => $answer,
         ]);
+
     }
 
     
