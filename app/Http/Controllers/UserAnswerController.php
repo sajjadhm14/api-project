@@ -14,6 +14,7 @@ use App\Models\TextAnswer;
 use App\Models\UserAnswer;
 use App\Models\UserLessons;
 use App\Builders\UserAnswerBuilder;
+use App\builders\UserAnswerUpdateBuilder;
 
 class UserAnswerController extends Controller
 {
@@ -98,8 +99,16 @@ class UserAnswerController extends Controller
      */
     public function update(UpdateUserAnswerRequest $request, UserAnswer $userAnswer)
     {
-        $userAnswer->update($request->validated());
-        return new UserAnswerResource($userAnswer);   
+        $data = $request ->validated();
+        $updator = new UserAnswerUpdateBuilder();
+        $updated = $updator ->setUserAnswer($userAnswer)->setData($data)->update();
+
+        $this-> updatelessonprogress($updated->user_id,$updated->question->lesson_id);
+        return response()->json([
+            'message' => $updator ->iscorrect() ? 'updated answer is correct' : 'updated answer is incorrect',
+            'answer' => $updated,
+        ]);
+
     }
 
     /**
