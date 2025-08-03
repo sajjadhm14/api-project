@@ -23,17 +23,20 @@ use Illuminate\Support\Facades\Route;
 
 
 
-
-
-
-
-Route::middleware('auth:sanctum')->prefix('category')->group(function(){
-    Route::get('',[CategoryController::class , 'index']);
-    Route::get('{category}',[CategoryController::class, 'show']);
-    Route::post('',[CategoryController::class, 'store']);
-    Route::put('{category}',[CategoryController::class, 'update']);
-    Route::delete('{category}',[CategoryController::class, 'destroy']);
+Route::middleware('auth:sanctum')->group(function(){
+    Route::apiResource('category',CategoryController::class);
+    Route::apiResource('lesson',LessonController::class);
 });
+
+
+
+// Route::middleware('auth:sanctum')->prefix('category')->group(function(){
+//     Route::get('',[CategoryController::class , 'index']);
+//     Route::get('{category}',[CategoryController::class, 'show']);
+//     Route::post('',[CategoryController::class, 'store']);
+//     Route::put('{category}',[CategoryController::class, 'update']);
+//     Route::delete('{category}',[CategoryController::class, 'destroy']);
+// });
 
 Route::middleware('auth:sanctum')->prefix('lesson')->group(function(){
     Route::get('',[LessonController::class , 'index']);
