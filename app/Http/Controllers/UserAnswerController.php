@@ -13,6 +13,7 @@ use App\Models\SelectOption;
 use App\Models\TextAnswer;
 use App\Models\UserAnswer;
 use App\Models\UserLessons;
+use App\Builders\UserAnswerBuilder;
 
 class UserAnswerController extends Controller
 {
@@ -31,45 +32,47 @@ class UserAnswerController extends Controller
      */
     public function store(StoreUserAnswerRequest $request)
     {
-      $user = $request->user();
-      $data = $request->validated();
+        $user = $request->user();
+        $data = $request->validated();
 
-      $exists = UserAnswer::where('user_id',$user->id)
-        ->where('question_id',$data['question_id'])
-        ->exists();
-    if ($exists){
-        return response()->json(['message' => 'you have already answered questino']);
+        $exists = UserAnswer::where('user_id',$user->id) 
+        ->where('question_id',$data['Question_id'])
+        ->exist();
+
+        
+        if ($exists){
+            return response()->json(['message'=> "you have already answered question"]);
+        }
+        $iscorrect =false;
+
+        if (!empty($data['select_question_id'])){
+            $option = SelectOption::find($data['select_option_id']);
+            $iscorrect = $option && $option->is_correct;
+        }
+        
+        if (!empty($data['answer_text'])){
+            $correctanswer = TextAnswer::where('question_id', $data['question_id'])->value('expected_answer');
+            $iscorrect = strtolower(trim($correctanswer)) === strtolower($data['answer_text']);
+        }
+
+        $answer = UserAnswer::create([
+            'user_id' =>$user->id,
+            'question_id'=> $data['question_id'],
+            'answer_text' => $data['answer_text'] ?? null,
+            'select_option_id' =>$data['select_option_id'] ?? null,
+            'points'=> $iscorrect ? 1 : 0,
+        ]);
+
+        $question = Question::find($data['question_id']);
+        $this->updateLessonProgress($user->id, $question->lesson_id);
+
+        return response()->json([
+              'message' => $iscorrect ? "answer is correct" : 'answer is wrong',
+              'answer'=>$answer,
+        ]);
+    }
+
     
-    }
-    $iscorrect = false;
-
-    // if its selectoption
-    if(!empty($data['select_option_id'])){
-        $option = SelectOption::find($data['select_option_id']);
-        $iscorrect = $option && $option->is_correct;
-    }
-
-    // if its textanswer
-    if (!empty($data['answer_text'])){
-        $correctanswer = TextAnswer::where('question_id', $data['question_id'])->value('correct_answer');
-        $iscorrect = strtolower(trim($correctanswer)) === strtolower(trim($data['answer_text']));
-    }
-    $answer =UserAnswer::create([
-        'user_id' =>$user->id,
-        'question_id'=> $data['question_id'],
-        'answer_text' => $data['answer_text'] ??null,
-        'select_option_id' =>$data['select_option_id'] ?? null,
-        'points'=> $iscorrect ? 1:0,
-     ]);
-      $question = Question::find($data['question_id']);
-      $this->updateLessonProgress($user->id, $question->lesson_id);
-
-    return response()->json([
-        'message' => $iscorrect? "answer is wrong" :'answer is correct',
-        'answer'=>$answer,
-    ]);
-
-    }
 
     /**
      * Display the specified resource.
