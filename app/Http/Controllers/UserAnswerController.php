@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\builders\LessonProgressBuilder;
 use App\Models\User_Answer;
 use App\Http\Requests\StoreUser_AnswerRequest;
 use App\Http\Requests\StoreUserAnswerRequest;
@@ -70,27 +71,10 @@ class UserAnswerController extends Controller
     }
 
 
-    public function updatelessonprogress($userid, $lessonid)
+    public function updateLessonProgress($userId, $lessonId)
     {
-      $totalQuestions = Question::where('lesson_id', $lessonid)->count();
-
-     if ($totalQuestions === 0) {
-        return; 
-     }
-      $answeredQuestions = UserAnswer::where('user_id', $userid)
-        ->whereIn('question_id', function ($query) use ($lessonid) {
-            $query->select('id')
-                  ->from('questions')
-                  ->where('lesson_id', $lessonid);
-        })->count();
-      $progress = intval(($answeredQuestions / $totalQuestions) * 100);
-
-     // به‌روزرسانی یا ساخت user_lessons
-      UserLessons::updateOrCreate(
-        ['user_id' => $userid, 'lesson_id' => $lessonid],
-        ['progress' => $progress]
-      );
-
+        $lessonProgressBuilder = new LessonProgressBuilder();
+        $lessonProgressBuilder->update($userId->id,$lessonId);
     }
     
 
