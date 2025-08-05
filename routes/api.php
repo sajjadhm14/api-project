@@ -27,10 +27,10 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::apiResource('category',CategoryController::class);
     Route::apiResource('lesson',LessonController::class);
     Route::apiResource('question',QuestionController::class);
-    Route::apiResource('textanswer',TextAnswerController::class);
-    Route::apiResource('selectoption', SelectOptionController::class);
-    Route::apiResource('useranswers',UserAnswerController::class);
-    Route::apiResource('userlessons',UserLessonsController::class);
+    Route::apiResource('textAnswer',TextAnswerController::class);
+    Route::apiResource('selectOption', SelectOptionController::class);
+    Route::apiResource('userAnswers',UserAnswerController::class);
+    Route::apiResource('userLessons',UserLessonsController::class);
 
 });
 
