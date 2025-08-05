@@ -38,7 +38,7 @@ class LessonControllerTest extends TestCase
    {
         $lesson = Lesson::factory()->create();
 
-        $response = $this->putJson('/api/lesson/{$lesson->id}',['name' => 'updateLesson']);
+        $response = $this->putJson("/api/lesson/{$lesson->id}",['name' => 'updateLesson']);
 
         $response -> assertStatus(200)
                   ->assertJsonPath('data.name', 'updateLesson');
@@ -51,7 +51,7 @@ class LessonControllerTest extends TestCase
    {
         $lesson = Lesson::factory()->create();
 
-        $response = $this->deleteJson('api/lesson/{$lesson->id}');
+        $response = $this->deleteJson("api/lesson/{$lesson->id}");
 
         $response -> assertStatus(204);
 
