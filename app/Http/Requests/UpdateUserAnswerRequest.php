@@ -22,8 +22,7 @@ class UpdateUserAnswerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'answer'      => 'nullable|string',
-            'points'      => 'nullable|integer|min:0',
+            'answer'      => 'nullable|string|max:255',
         ];
     }
 }

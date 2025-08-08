@@ -24,8 +24,8 @@ class StoreLessonRequest extends FormRequest
         return [
         'lesson_id' => ['required', 'integer', 'exists:lessons,id'],
         'category_id' => 'required|integer',
-        'title' => 'required|string',
-        'description' => 'required|string'
+        'title' => 'required|string|max:255',
+        'description' => 'required|string|max:255'
         ];
     }
 }

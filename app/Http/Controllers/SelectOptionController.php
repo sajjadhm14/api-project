@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Select_option;
 use App\Http\Requests\StoreSelect_optionRequest;
-use App\Http\Requests\StoreSelectoptionRequest;
+use App\Http\Requests\StoreSelectOptionRequest;
 use App\Http\Requests\UpdateSelect_optionRequest;
-use App\Http\Requests\UpdateSelectoptionRequest;
+use App\Http\Requests\UpdateSelectOptionRequest;
 use App\Http\Resources\SelectOptionResource;
 use App\Models\SelectOption;
 
@@ -26,7 +26,7 @@ class SelectOptionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSelectoptionRequest $request)
+    public function store(StoreSelectOptionRequest $request)
     {
         $option = SelectOption::create($request->validated());
         return new SelectOptionResource($option);
@@ -35,9 +35,9 @@ class SelectOptionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Selectoption $selectoption)
+    public function show(SelectOption $selectOption)
     {
-        return new SelectOptionResource($selectoption);
+        return new SelectOptionResource($selectOption);
     }
 
 
@@ -45,18 +45,18 @@ class SelectOptionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSelectoptionRequest $request, Selectoption $selectoption)
+    public function update(UpdateSelectOptionRequest $request, SelectOption $selectOption)
     {
-        $selectoption->update($request->validated());
-        return new SelectOptionResource($selectoption);
+        $selectOption->update($request->validated());
+        return new SelectOptionResource($selectOption);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Selectoption $selectoption)
+    public function destroy(SelectOption $selectOption)
     {
-        $selectoption->delete();
-        return response()->json(['message' => 'selectoption is Deleted']);
+        $selectOption->delete();
+        return response()->json(['message' => 'selectOption is Deleted']);
     }
 }

@@ -24,8 +24,6 @@ class UpdateUserLessonsRequest extends FormRequest
         return [
         'user_id' => 'required|exists:users,id',
         'lesson_id' => 'required|exists:lessons,id',
-        'progress' => 'integer|min:0',
-        'total_points' => 'integer|min:0',
         ];
     }
 }

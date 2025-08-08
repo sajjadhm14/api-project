@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Factories;
+use app\enum\QuestionType;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,7 +20,10 @@ class QuestionFactory extends Factory
         return [
             'lesson_id' => \App\Models\Lesson::factory(),
             'text' => $this->faker->text(5),
-            'type' => $this->faker->randomElement([1, 2]),
+            'type' => $this->faker->randomElement([
+            QuestionType::TEXT,
+            QuestionType::SELECT
+            ]),
             'difficulty' => rand(1, 3),
         ];
     }

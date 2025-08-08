@@ -23,8 +23,8 @@ class UpdateQuestionRequest extends FormRequest
     {
         return [
         'lesson_id' => 'required|exists:lessons,id',
-        'text' => 'required|string',
-        'type' => 'required|in:0,1',
+        'text' => 'required|string|max:255',
+        'type' => 'required|new Enum(QuestionType::class)',
         'difficulty' => 'required|integer|min:1|max:10',
         ];
     }

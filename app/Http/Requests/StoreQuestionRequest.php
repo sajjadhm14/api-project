@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\enum\QuestionType;
+use Illuminate\Validation\Rules\Enum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreQuestionRequest extends FormRequest
@@ -23,8 +25,8 @@ class StoreQuestionRequest extends FormRequest
     {
         return [
         'lesson_id' => ['required', 'exists:lessons,id'],
-        'text' => ['required', 'string'],
-        'type' => ['required', 'in:0,1'],
+        'text' => ['required', 'string', 'max:255'],
+        'type' => ['required', new Enum(QuestionType::class)],
         'difficulty' => ['required', 'integer', 'min:1', 'max:10'],
         ];
     }

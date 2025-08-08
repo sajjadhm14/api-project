@@ -38,8 +38,8 @@ class UserAnswerController extends Controller
         $data = $request->validated();
 
         $exists = UserAnswer::where('user_id',$user->id) 
-        ->where('question_id',$data['Question_id'])
-        ->exist();
+            ->where('question_id',$data['question_id'])
+            ->exist();
 
 
         if ($exists){
@@ -47,10 +47,10 @@ class UserAnswerController extends Controller
         }
        
         $builder = new UserAnswerBuilder();
-        $answer = $builder ->setUser($user)->setData($data)->build();
+        $answer = $builder ->setUser($user)->setData($data)->save($user);
 
         $question = Question::find ($data['question_id']);
-        $this->updatelessonprogress($user->id,$question->lesson_id);
+        $this->updateLessonProgress($user->id,$question->lesson_id);
 
     
         return response()->json([
@@ -83,14 +83,17 @@ class UserAnswerController extends Controller
      */
     public function update(UpdateUserAnswerRequest $request, UserAnswer $userAnswer)
     {
-        $data = $request ->validated();
-        $updator = new UserAnswerUpdateBuilder();
-        $updated = $updator ->setUserAnswer($userAnswer)->setData($data)->update();
+        $data = $request->validated();
 
-        $this-> updatelessonprogress($updated->user_id,$updated->question->lesson_id);
-        return response()->json([
-            'message' => $updator ->iscorrect() ? 'updated answer is correct' : 'updated answer is incorrect',
-            'answer' => $updated,
+        $updator = new UserAnswerBuilder();
+        $updated = $updator->setUser($userAnswer->user) 
+                            ->setData($data) 
+                            ->save($userAnswer); 
+        $this->updateLessonProgress($updated->user_id, $updated->question->lesson_id);
+
+            return response()->json([
+                'message' => $updator->isCorrect() ? 'Updated answer is correct' : 'Updated answer is incorrect',
+                'answer' => $updated,
         ]);
 
     }

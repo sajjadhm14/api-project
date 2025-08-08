@@ -20,7 +20,7 @@ class UserLessonsController extends Controller
     {
         return UserLessonResource::collection(UserLessons::all());
     }
-    public function startlesson(StoreUserLessonsRequest $request)
+    public function startLesson(StoreUserLessonsRequest $request)
     {
         
         $user = $request->user();

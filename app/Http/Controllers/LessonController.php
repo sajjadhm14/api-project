@@ -21,11 +21,11 @@ class LessonController extends Controller
     {
         return LessonResource::collection(Lesson::all());
     }
-    public function startlessonwithquestion(StoreLessonRequest $request)
+    public function startLessonWithQuestion(StoreLessonRequest $request)
     {
         $user = $request -> user();
         $lesson_id = $request->validated()['lesson_id'];
-        $userlesson = UserLessons::firstorcreate([
+        $userLesson = UserLessons::firstOrCreate([
             'user_id' => $user->id,
             'lesson_id' => $lesson_id,
         ],[
@@ -36,7 +36,7 @@ class LessonController extends Controller
             ->get();
         return response()->json([
             'message' => 'سلام عزیز درست شروع شد :)',
-            'progress' => $userlesson->progress,
+            'progress' => $userLesson->progress,
             'question' => QuestionResource::collection($questions),
         ]);
     }
