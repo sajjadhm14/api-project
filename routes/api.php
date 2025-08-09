@@ -31,6 +31,9 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::apiResource('selectOption', SelectOptionController::class);
     Route::apiResource('userAnswers',UserAnswerController::class);
     Route::apiResource('userLessons',UserLessonsController::class);
+    Route::get('user-prof', [UserController::class , 'index']);
+    Route::post('user-prof',[ UserController::class , 'store']);
+
 
 });
 
