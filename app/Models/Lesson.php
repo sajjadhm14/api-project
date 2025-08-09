@@ -16,6 +16,11 @@ class Lesson extends Model
         
     ];
 
+    public function lessonBanner()
+    {
+        return $this->belongsTo(lessonBanner::class);
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);
