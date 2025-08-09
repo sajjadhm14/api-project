@@ -23,6 +23,10 @@ class User extends Authenticatable
      */
     
 
+    public function avatar()
+    {
+        return $this->hasOne(Avatar::class, 'user_id');
+    }
     public function answers(){
         return $this->hasMany(UserAnswer::class);
     }
