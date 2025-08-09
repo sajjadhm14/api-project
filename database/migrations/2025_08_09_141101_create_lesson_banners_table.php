@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('lesson_banners', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('lesson_id')->constrained()->onDelete('cascade');
+            $table->foreignId('lesson_id')->constrained()->onDelete('cascade')->unique();
             $table->string('image_path');
             $table->timestamps();
         });

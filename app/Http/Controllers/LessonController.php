@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBannerRequest;
 use App\Models\Lesson;
 use App\Http\Requests\StoreLessonRequest;
 use App\Http\Requests\UpdateLessonRequest;
@@ -82,26 +83,23 @@ class LessonController extends Controller
 
     public function storeBanner(StoreBannerRequest $request, Lesson $lesson)
     {
-        $data = $request->validated();
-
-        if ($lesson->banner && Storage::disk('public')->exists($lesson->banner->image_path)) {
+        if ($lesson->banner && $lesson->banner->image_path && Storage::disk('public')->exists($lesson->banner->image_path)) {
             Storage::disk('public')->delete($lesson->banner->image_path);
         }
 
         $imagePath = $request->file('image')->store('banners', 'public');
 
-        if ($lesson->banner) {
-            $lesson->banner->update(['image_path' => $imagePath]);
-        }
-         else {
-            $lesson->banner()->create(['image_path' => $imagePath]);
-        }
+        $lesson->banner()
+            ->updateOrCreate([], ['image_path' => $imagePath]);
 
         return response()->json([
             'success' => true,
             'message' => 'Banner saved successfully',
         ]);
+    
+
     }
+    
     public function deleteBanner(Lesson $lesson)
    {
         if (!$lesson->banner) {
@@ -111,7 +109,7 @@ class LessonController extends Controller
             ], 404);
         }
 
-        if (Storage::disk('public')->exists($lesson->banner->image_path)) {
+        if ($lesson->banner->image_path && Storage::disk('public')->exists($lesson->banner->image_path)) {
             Storage::disk('public')->delete($lesson->banner->image_path);
         }
 
@@ -120,7 +118,7 @@ class LessonController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Banner deleted successfully',
-         ]);
+        ]);
     }
 
 }
