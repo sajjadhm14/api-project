@@ -11,6 +11,7 @@ use App\Http\Resources\QuestionResource;
 use App\Models\Category;
 use App\Models\Question;
 use App\Models\UserLessons;
+use Illuminate\Support\Facades\Storage;
 
 class LessonController extends Controller
 {
@@ -78,4 +79,48 @@ class LessonController extends Controller
         $lesson->delete();
         return response()->json(['message' => 'lesson Deleted successfully']);
     }
+
+    public function storeBanner(StoreBannerRequest $request, Lesson $lesson)
+    {
+        $data = $request->validated();
+
+        if ($lesson->banner && Storage::disk('public')->exists($lesson->banner->image_path)) {
+            Storage::disk('public')->delete($lesson->banner->image_path);
+        }
+
+        $imagePath = $request->file('image')->store('banners', 'public');
+
+        if ($lesson->banner) {
+            $lesson->banner->update(['image_path' => $imagePath]);
+        }
+         else {
+            $lesson->banner()->create(['image_path' => $imagePath]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Banner saved successfully',
+        ]);
+    }
+    public function deleteBanner(Lesson $lesson)
+   {
+        if (!$lesson->banner) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Banner not found',
+            ], 404);
+        }
+
+        if (Storage::disk('public')->exists($lesson->banner->image_path)) {
+            Storage::disk('public')->delete($lesson->banner->image_path);
+        }
+
+        $lesson->banner->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Banner deleted successfully',
+         ]);
+    }
+
 }
