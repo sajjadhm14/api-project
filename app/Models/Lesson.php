@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Lesson extends Model
+class Lesson extends Model implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\LessonFactory> */
-    use HasFactory;
+    use HasFactory,InteractsWithMedia;
     protected $fillable = [
         'category_id',
         'title',
