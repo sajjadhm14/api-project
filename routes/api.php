@@ -31,7 +31,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::apiResource('selectOption', SelectOptionController::class);
     Route::apiResource('userAnswers',UserAnswerController::class);
     Route::apiResource('userLessons',UserLessonsController::class);
- 
+    Route::get('user', [UserController::class, 'index']);
+    Route::post('user', [UserController::class, 'updateAvatar']);
 
 });
 
