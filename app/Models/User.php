@@ -28,13 +28,18 @@ class User extends Authenticatable implements HasMedia
      * @var list<string>
      */
     
-
-    public function registerMediaConversions(?Media $media = null): void
+      public function registerMediaCollections(): void
     {
-        $this
-            ->addMediaConversion('preview')
-            ->fit(Fit::Contain, 300, 300)
-            ->nonQueued();
+        $this->addMediaCollection('avatar')->singleFile();
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+            ->width(150)
+            ->height(150)
+            ->nonQueued()
+            ->performOnCollections('avatar');
     }
  
     public function answers(){
