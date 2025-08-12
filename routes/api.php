@@ -31,8 +31,10 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::apiResource('selectOption', SelectOptionController::class);
     Route::apiResource('userAnswers',UserAnswerController::class);
     Route::apiResource('userLessons',UserLessonsController::class);
-    Route::get('user', [UserController::class, 'index']);
-    Route::post('user', [UserController::class, 'updateAvatar']);
+    Route::get('user', [UserController::class, 'showAvatar']);
+    Route::post('user', [UserController::class, 'storeAvatar']);
+    Route::put('user', [UserController::class, 'updateAvatar']);
+    Route::delete('user', [UserController::class, 'destroyAvatar']);
     Route::get('/lessons/{lesson}/banner', [LessonController::class, 'showBanner']);
     Route::post('lesson-banner', [LessonController::class ,'storeBanner']);
 
