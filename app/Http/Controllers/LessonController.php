@@ -82,6 +82,15 @@ class LessonController extends Controller
         return response()->json(['message' => 'lesson Deleted successfully']);
     }
 
+    public function showBanner(Lesson $lesson)
+{
+    return response()->json([
+        'banner_url' => $lesson->getFirstMediaUrl('banner'),
+        'banner_thumb_url' => $lesson->getFirstMediaUrl('banner', 'thumb'),
+    ]);
+}
+
+
 
     public function storeBanner(StoreBannerRequest $request, Lesson $lesson)
 {

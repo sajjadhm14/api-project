@@ -33,6 +33,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::apiResource('userLessons',UserLessonsController::class);
     Route::get('user', [UserController::class, 'index']);
     Route::post('user', [UserController::class, 'updateAvatar']);
+    Route::get('/lessons/{lesson}/banner', [LessonController::class, 'showBanner']);
+    Route::post('lesson-banner', [LessonController::class ,'storeBanner']);
 
 });
 
