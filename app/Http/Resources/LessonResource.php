@@ -21,6 +21,8 @@ class LessonResource extends JsonResource
         'description' => $this->description,
         'category_id' => $this->category_id,
         'category' => new CategoryResource($this->whenLoaded('category')),
+        'banner_url' => $this->getFirstMediaUrl('banner'),
+        'banner_thumb_url' => $this->getFirstMediaUrl('banner', 'thumb'),
         ];
     }
 }

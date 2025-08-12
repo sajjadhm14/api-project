@@ -13,6 +13,7 @@ use App\Models\Category;
 use App\Models\Question;
 use App\Models\UserLessons;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class LessonController extends Controller
 {
@@ -81,5 +82,19 @@ class LessonController extends Controller
         return response()->json(['message' => 'lesson Deleted successfully']);
     }
 
+
+    public function storeBanner(StoreBannerRequest $request, Lesson $lesson)
+{
+    $lesson->clearMediaCollection('banner');
+
+    $media = $lesson->addMediaFromRequest('banner')
+        ->usingFileName(Str::uuid().'.'.$request->file('banner')->getClientOriginalExtension())
+        ->toMediaCollection('banner');
+
+    return response()->json([
+        'banner_url' => $lesson->getFirstMediaUrl('banner'),
+        'banner_thumb_url' => $lesson->getFirstMediaUrl('banner', 'thumb')
+    ], 201);
+}
 
 }
