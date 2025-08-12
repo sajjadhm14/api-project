@@ -7,10 +7,10 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Lesson extends Model implements HasMedia
+class Lesson extends Model
 {
     /** @use HasFactory<\Database\Factories\LessonFactory> */
-    use HasFactory,InteractsWithMedia;
+    use HasFactory;
     protected $fillable = [
         'category_id',
         'title',
