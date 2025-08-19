@@ -13,7 +13,7 @@ class QuestionPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('manage questions');
+        return $user->can('view questions');
     }
 
     /**
@@ -21,7 +21,7 @@ class QuestionPolicy
      */
     public function view(User $user, Question $question): bool
     {
-        return  $user->can('manage questions');
+        return  $user->can('view questions');
     }
 
     /**

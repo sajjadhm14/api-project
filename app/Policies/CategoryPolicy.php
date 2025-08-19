@@ -59,7 +59,7 @@ class CategoryPolicy
      */
     public function restore(User $user, Category $category): bool
     {
-        return $user->can('view category');
+        return $user->can('manage category');
     }
 
     /**
@@ -67,6 +67,6 @@ class CategoryPolicy
      */
     public function forceDelete(User $user, Category $category): bool
     {
-        return $user->can('view category');
+        return $user->can('manage category');
     }
 }

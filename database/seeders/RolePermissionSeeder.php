@@ -18,7 +18,9 @@ class RolePermissionSeeder extends Seeder
             'manage category' ,
             'manage lessons' ,
             'manage questions',
+            'view category',
             'view lessons',
+            'view questions',
         ];
         foreach ($permissions as $permission)
         {
@@ -27,10 +29,10 @@ class RolePermissionSeeder extends Seeder
 
         $superAdmin = Role::firstOrCreate(['name' => 'super-admin']);
         $admin = Role::firstOrCreate(['name' => 'admin']);
-        $user = Role :: firstOrCreate(['name' => 'admin']);
+        $user = Role :: firstOrCreate(['name' => 'user']);
 
-        $admin -> givePermissionTo(['manage category', 'manage lessons' , 'manage questions']);
-        $user -> givePermissionTo (['view lessons']);
+        $admin -> givePermissionTo(['manage category', 'manage lessons' , 'manage questions' , 'view category' , 'view lessons' , 'view questions']);
+        $user -> givePermissionTo (['view lessons' , 'view category', 'view questions']);
         $superAdmin -> givePermissionTo(Permission::all());
     }
 }
