@@ -10,14 +10,16 @@ class CategoryPolicy
 {
     public function before($user, $ability)
 {
-    return true;
+    if($user->hasRole('superAdmin')){
+        return true;
+    }
 }
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->can('view category');
     }
 
     /**
@@ -25,7 +27,7 @@ class CategoryPolicy
      */
     public function view(User $user, Category $category): bool
     {
-        return true;
+        return $user->can('view category');
     }
 
     /**
@@ -33,7 +35,7 @@ class CategoryPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->can('manage category');
     }
 
     /**
@@ -41,7 +43,7 @@ class CategoryPolicy
      */
     public function update(User $user, Category $category): bool
     {
-        return true;
+        return $user->can('manage category');
     }
 
     /**
@@ -49,7 +51,7 @@ class CategoryPolicy
      */
     public function delete(User $user, Category $category): bool
     {
-        return true;
+        return $user->can('manage category');
     }
 
     /**
@@ -57,7 +59,7 @@ class CategoryPolicy
      */
     public function restore(User $user, Category $category): bool
     {
-        return true;
+        return $user->can('view category');
     }
 
     /**
@@ -65,6 +67,6 @@ class CategoryPolicy
      */
     public function forceDelete(User $user, Category $category): bool
     {
-        return true;
+        return $user->can('view category');
     }
 }
