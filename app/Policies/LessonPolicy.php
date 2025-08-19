@@ -13,7 +13,7 @@ class LessonPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('manage lessons');
+        return $user->can('view lessons');
     }
 
     /**
@@ -21,7 +21,7 @@ class LessonPolicy
      */
     public function view(User $user, Lesson $lesson): bool
     {
-        return $user->can('manage lessons');
+        return $user->can('view lessons');
     }
 
     /**
