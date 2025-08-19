@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::apiResource('category',CategoryController::class);
-    Route::apiResource('lesson',LessonController::class);
+    Route::apiResource('lesson',LessonController::class)->middleware(['vip.lesson']);
     Route::apiResource('question',QuestionController::class);
     Route::apiResource('textAnswer',TextAnswerController::class);
     Route::apiResource('selectOption', SelectOptionController::class);
